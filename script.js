@@ -1,7 +1,7 @@
-// 1. PASTE YOUR GOOGLE SHEET LINK BETWEEN THE QUOTES BELOW:
+//dat google link
 const GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1D-NNIAcPQ4F2FxxtYKdrkV7ho9sZ2Zfy9phnPs6Tv5Y/edit?usp=sharing";
 
-// This breaks down the URL and grabs the exact ID to pull clean data
+
 const sheetId = GOOGLE_SHEET_URL.split("/d/")[1].split("/")[0];
 const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv`;
 
@@ -20,7 +20,7 @@ async function searchTruck() {
     resultsDiv.innerHTML = "<h2>Searching...</h2>";
 
     try {
-        // Google Sheets allows direct fetching seamlessly
+        // fetch from my sheets yo
         const response = await fetch(csvUrl);
         if (!response.ok) throw new Error("Failed to fetch sheet data");
         
@@ -30,7 +30,7 @@ async function searchTruck() {
         const result = trucks.find(truck => truck.id === truckID);
 
         if (result) {
-            // Build the clean Google Maps link using your coordinates
+          //load tha map
             const mapsLink = `https://www.google.com/maps/search/?api=1&query=${result.latitude},${result.longitude}`;
 
             resultsDiv.innerHTML = `
@@ -47,6 +47,7 @@ async function searchTruck() {
             resultsDiv.innerHTML = "<h2>Truck Not Found</h2>";
         }
     } catch (error) {
+        //uh oh we cooked
         console.error(error);
         resultsDiv.innerHTML = "<h2>Error loading spreadsheet data. Make sure your Google Sheet is shared to 'Anyone with the link'.</h2>";
     }
